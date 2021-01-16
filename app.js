@@ -1,32 +1,31 @@
-const EventEmmiter = require('events');
-const eventEmmiter = new EventEmmiter();
-
-eventEmmiter.on('tutorial', (num1) => {
-  console.log(num1);
+const readline = require('readline');
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
 });
 
-eventEmmiter.emit('tutorial', 'Hello everyone!');
+let num1 = Math.floor(Math.random() * 10 + 1);
+let num2 = Math.floor(Math.random() * 10 + 1);
 
-class Person extends EventEmmiter {
-  constructor(name) {
-    super();
-    this._name = name;
+let answer = num1 + num2;
+
+rl.question(`What is the sum of ${num1} and ${num2}?\n`, (userInput) => {
+  if (userInput.trim() == answer) {
+    rl.close();
+  } else {
+    rl.setPrompt('Incorrect response, please try again\n');
+    rl.prompt();
+    rl.on('line', (userInput) => {
+      if (userInput.trim() == answer) {
+        rl.close();
+      } else {
+        rl.setPrompt(`Your answer "${userInput}" is incorrect, try again\n`);
+        rl.prompt();
+      }
+    });
   }
-
-  get name() {
-    return this._name;
-  }
-}
-
-let pedro = new Person('Pedro');
-let christina = new Person('Christina');
-
-pedro.on('name', () => {
-  console.log('my name is ' + pedro.name);
-});
-christina.on('name', () => {
-  console.log('my name is ' + christina.name);
 });
 
-pedro.emit('name');
-christina.emit('name');
+rl.on('close', () => {
+  console.log('Correct!!!');
+});
