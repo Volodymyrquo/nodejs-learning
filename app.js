@@ -1,19 +1,30 @@
-const fs = require('fs');
-const zlib = require('zlib');
-const gunzip = zlib.createGunzip();
-/* const readStream = fs.createReadStream('./example.txt', 'utf8');
-const writeStream = fs.createWriteStream('example_three.txt.gz');
- */
-/* readStream.on('data', (chunk) => {
-  writeStream.write(chunk);
-}); */
+const http = require('http');
+const server = http.createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/html' });
+  if (req.url == '/') {
+    res.write("<h1 style='color: blue'>Hello node js from main domain</h1>");
+    res.end();
+  } else {
+    switch (req.url) {
+      case '/banana':
+        res.write(
+          "<h1 style='color: yellow'>Hello node js from other domain <span style='text-transform: uppercase'>banana</span></h1>"
+        );
+        res.end();
+        break;
+      case '/orange':
+        res.write(
+          "<h1 style='color: orange'>Hello node js from other domain orange</h1>"
+        );
+        res.end();
+        break;
+      default:
+        res.write(
+          "<h1 style='color: green'>Hello node js from other domain default</h1>"
+        );
+        res.end();
+    }
+  }
+});
 
-/* readStream.pipe(writeStream); */
-
-/* readStream.pipe(gzip).pipe(writeStream);
- */
-
-const readStream = fs.createReadStream('./example_three.txt.gz');
-const writeStream = fs.createWriteStream('uncompressed.txt');
-
-readStream.pipe(gunzip).pipe(writeStream);
+server.listen('3000');
