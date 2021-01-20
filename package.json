@@ -24,7 +24,6 @@
   },
   "homepage": "https://github.com/Volodymyrquo/nodejs-learning#readme",
   "dependencies": {
-    "express": "^4.17.1",
-    "lodash": "^4.17.20"
+    "express": "^4.17.1"
   }
 }

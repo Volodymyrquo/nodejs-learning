@@ -1,16 +1,11 @@
 const express = require('express');
+const path = require('path');
 const app = express();
 
+app.use('/public', express.static(__dirname + '/static_1'));
+
 app.get('/', (req, res) => {
-  res.send('Hello everyone');
-});
-app.get('/example', (req, res) => {
-  res.send('This is just an example');
-});
-app.get('/example/:name/:age', (req, res) => {
-  console.log(req.params);
-  console.log(req.query);
-  res.send(`${req.params.name} : ${req.params.age}`);
+  res.sendFile(__dirname + '/static_1' + '/index.html');
 });
 
-app.listen(3000);
+app.listen(8000);
