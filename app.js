@@ -1,10 +1,16 @@
-const http = require('http');
-const fs = require('fs');
+const express = require('express');
+const app = express();
 
-http
-  .createServer((req, res) => {
-    const readStream = fs.createReadStream('./static/avatar.png');
-    res.writeHead(200, { 'Content-Type': 'image/png' });
-    readStream.pipe(res);
-  })
-  .listen(3000);
+app.get('/', (req, res) => {
+  res.send('Hello everyone');
+});
+app.get('/example', (req, res) => {
+  res.send('This is just an example');
+});
+app.get('/example/:name/:age', (req, res) => {
+  console.log(req.params);
+  console.log(req.query);
+  res.send(`${req.params.name} : ${req.params.age}`);
+});
+
+app.listen(3000);
