@@ -3,18 +3,17 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const app = express();
 
-app.use('/public', express.static(path.join(__dirname, 'static_json')));
+app.use('/public', express.static(path.join(__dirname, 'static_form')));
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'static_json', 'index.html'));
+  res.sendFile(path.join(__dirname, 'static_form', 'index.html'));
 });
 
 app.post('/', (req, res) => {
   console.log(req.body);
-  //some database call here
-  res.json({ success: true });
+
+  res.send('successfully posted data');
 });
 
 app.listen(8000);
